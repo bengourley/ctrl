@@ -3,13 +3,15 @@ module.exports = {
   version: '0.0.1',
   description: 'Upload and manage assets',
   initialize: [
-    function(serviceLocator) {
+    function(serviceLocator, done) {
       serviceLocator.register('assetModel',
         require('./lib/assetModel')
         .createModel(serviceLocator.properties, serviceLocator));
+      done();
     },
-    function(serviceLocator) {
+    function(serviceLocator, done) {
       serviceLocator.adminAccessControlList.addResource('Asset');
+      done();
     }
   ]
 };

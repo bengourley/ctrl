@@ -8,11 +8,12 @@ module.exports = {
     section: 'asset'
   }],
   initialize: [
-    function(serviceLocator) {
+    function(serviceLocator, done) {
       // The resource you need access of see the admin bundles
       serviceLocator.adminAccessControlList.addResource('Asset');
+      done();
     },
-    function(serviceLocator) {
+    function(serviceLocator, done) {
       // Create controller
       require('./controller').createRoutes(
         serviceLocator.app,
@@ -20,6 +21,7 @@ module.exports = {
         serviceLocator,
         __dirname + '/views'
       );
+      done();
     }
   ]
 };

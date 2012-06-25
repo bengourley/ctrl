@@ -15,6 +15,7 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
    */
   app.get(
     '/admin/asset',
+    serviceLocator.adminAccessControl.requiredAccess('Asset', 'read'),
     compact.js(['global'], ['admin-common'], ['admin-asset']),
     function (req, res) {
       viewRender(req, res, 'assetAdmin', {
@@ -31,6 +32,7 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
    */
   app.get(
     '/admin/asset/api/list',
+    serviceLocator.adminAccessControl.requiredAccess('Asset', 'read'),
     function (req, res) {
       serviceLocator.assetModel.list(function (err, results) {
         if (!err) {
@@ -44,6 +46,7 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
 
   app.post(
     '/admin/asset/api/new',
+    serviceLocator.adminAccessControl.requiredAccess('Asset', 'create'),
     serviceLocator.uploadDelegate.middleware,
     function (req, res) {
 
@@ -73,15 +76,19 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
     }
   );
 
-  app.delete('/admin/asset/api/:id', function (req, res) {
+  app.delete(
+    '/admin/asset/api/:id',
+    serviceLocator.adminAccessControl.requiredAccess('Asset', 'delete'),
+    function (req, res) {
 
-    var id = req.params.id;
-    serviceLocator.assetModel.delete(id, function (err) {
-      console.log(err);
-      res.end('' + err);
-    });
+      var id = req.params.id;
+      serviceLocator.assetModel.delete(id, function (err) {
+        console.log(err);
+        res.end('' + err);
+      });
 
-  });
+    }
+  );
 
 }
 

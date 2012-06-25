@@ -34,6 +34,8 @@ module.exports.createServer = function(properties, serviceLocator) {
     , 'generic'
     , 'adminUi'
     , 'section'
+    , 'asset'
+    , 'assetAdmin'
     , 'articleAdmin'
     , 'article'
     ]

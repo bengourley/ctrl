@@ -34,20 +34,19 @@ $(function($) {
 
     switch ($(this).val()) {
       case 'Markdown':
-        window.confirmDialog(
-          'Switching to Markdown will make the field plain ' +
-          'text. Do you want to remove the HTML formatting?',
-          function () {
+        window.confirmDialog({
+          message: 'Switching to Markdown will make the field plain ' +
+                   'text. Do you want to remove the HTML formatting?',
+          confirm: function () {
             $bodyControl.destroyEditor();
             $bodyControl.val($('<div>').html(body).text());
           },
-          function () {
+          deny: function () {
             $bodyControl.destroyEditor();
           },
-          false,
-          'Remove HTML tags',
-          'Keep HTML tags'
-        );
+          confirmVerb: 'Remove HTML tags',
+          denyVerb: 'Keep HTML tags'
+        });
         break;
       case 'HTML':
         $bodyControl.redactor({

@@ -11,12 +11,34 @@ block content
 
   .panel-group
 
-    h3 Upload asset
+    h3 Upload
 
     form#fileupload
-      input(type='file', name='files[]', multiple)
-    input.button(type='submit', value='Upload')
+      input(type='file', name='files[]', multiple, style='display:none')
+      .form-row
+        .label
+          span Upload an asset:
+          input.button.primary(type='submit', value='Choose assets to upload')
+          .description
+            p You can upload mutliple files at once by cmd/ctrl clicking them.
 
-  .panel-group
+  #asset-list
 
-    h3 Assets
+prepend script
+  script(type='text/template', id='asset-list-item-template')
+    .panel-asset-item
+      .asset-item-thumbnail
+        img(src='http://dummyimage.com/100x100')
+      .asset-item-details
+        .editable(data-field-name='title')
+          span.data <%= title %>
+        .editable(data-field-name='description')
+          span.data <%= description %>
+        .editable(data-field-name='tag')
+          span.data <%= tags %>
+      .asset-item-meta
+        span Filename: <%= basename %>
+        span Type: <%= type %>
+        span Size: <%= size %> Bytes
+        span Created: <%= created %>
+      button.delete(data-id!='<%= _id %>') Delete

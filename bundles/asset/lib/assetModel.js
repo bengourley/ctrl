@@ -40,6 +40,21 @@ function createModel(properties, serviceLocator) {
       });
     },
 
+    update: function (id, data, cb) {
+
+      // // Grab only the editable fields
+      // var fields = {
+      //   name: data.title,
+      //   description: data.description,
+      //   tags: data.tags
+      // };
+
+      crudDelegate.update(id, data, function (err) {
+        cb(err);
+      });
+
+    },
+
     delete: function (id, cb) {
 
       crudDelegate.read(id, function (err, result) {

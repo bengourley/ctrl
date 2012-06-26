@@ -122,11 +122,22 @@ module('control-misc-ui', function (module) {
       return [];
     }
 
-    function confirm(message, confirm, deny, danger, confirmVerb, denyVerb) {
+    function confirm(options) {
+
+      var settings = {
+        message: 'Are you sure?',
+        confirm: function () {},
+        deny: function () {},
+        confirmVerb: 'Confirm',
+        denyVerb: 'Cancel',
+        danger: false
+      };
+
+      settings = $.extend(settings, options);
 
       var dialog = $('<div/>').addClass('dialog-confirm');
       var overlay = $('<div/>').addClass('dialog-overlay');
-      dialog.append($('<p/>').text(message));
+      dialog.append($('<p/>').text(settings.message));
 
       function remove() {
         overlay.remove();
@@ -136,21 +147,21 @@ module('control-misc-ui', function (module) {
       var controls = $('<div/>').addClass('controls');
 
       controls.append(
-        $('<button/>').text(confirmVerb || 'Confirm')
-          .addClass(danger ? 'danger' : 'primary')
+        $('<button/>').text(settings.confirmVerb)
+          .addClass(settings.danger ? 'danger' : 'primary')
           .bind('click', function (e) {
             e.preventDefault();
             remove();
-            confirm();
+            settings.confirm();
           })
       );
 
       controls.append(
-        $('<button/>').text(denyVerb || 'Cancel')
+        $('<button/>').text(settings.denyVerb)
           .bind('click', function (e) {
             e.preventDefault();
             remove();
-            deny();
+            settings.deny();
           })
       );
 

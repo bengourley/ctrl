@@ -24,6 +24,15 @@ module.exports = {
       all: [validation.required]
     }
   },
+  title: {
+    defaultValue: ''
+  },
+  description: {
+    defaultValue: ''
+  },
+  tags: {
+    defaultValue: ''
+  },
   created: {
     defaultValue: function() { return new Date(); }
   }

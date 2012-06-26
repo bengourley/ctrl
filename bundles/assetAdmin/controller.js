@@ -6,8 +6,12 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
     , compact = serviceLocator.compact;
 
   compact.addNamespace('admin-asset', __dirname + '/public')
+    .addJs('js/deps/underscore.js')
     .addJs('js/deps/jquery.iframe-transport.js')
     .addJs('js/deps/jquery.fileupload.js')
+    .addJs('js/assetListView.js')
+    .addJs('js/assetItemModel.js')
+    .addJs('js/notifier.js')
     .addJs('js/app.js');
 
   /*
@@ -60,11 +64,7 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
       req.body.files.forEach(function (file) {
 
         serviceLocator.assetModel.create(file, function (err, result) {
-          response.push({
-            name: file.basename,
-            size: file.size,
-            url: '/todo'
-          });
+          response.push(result);
           countdown--;
           if (countdown === 0) {
             res.end(JSON.stringify(response))
@@ -83,8 +83,24 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
 
       var id = req.params.id;
       serviceLocator.assetModel.delete(id, function (err) {
-        console.log(err);
-        res.end('' + err);
+        res.end(JSON.stringify({
+          success: !err
+        }));
+      });
+
+    }
+  );
+
+  app.put(
+    '/admin/asset/api/:id',
+    serviceLocator.adminAccessControl.requiredAccess('Asset', 'update'),
+    function (req, res) {
+
+      var id = req.params.id;
+      serviceLocator.assetModel.update(id, req.body, function (err) {
+        res.end(JSON.stringify({
+          success: !err
+        }));
       });
 
     }

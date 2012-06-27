@@ -55,26 +55,26 @@ module('assetListView', function (module) {
           input.focus();
           placeholder.hide();
 
-          function blur() {
+          function blur(e) {
             field.trigger('cancel');
             input.off('blur', blur);
-            input.off('keyup', keyup);
+            input.off('keydown', keydown);
           }
 
-          function keyup(e) {
-            if (e.keyCode === 13) {
+          function keydown(e) {
+            if (e.keyCode === 13 || e.keyCode === 9) {
               field.trigger('save');
               input.off('blur', blur);
-              input.off('keyup', keyup);
+              input.off('keydown', keydown);
             } else if (e.keyCode === 27) {
               field.trigger('cancel');
               input.off('blur', blur);
-              input.off('keyup', keyup);
+              input.off('keydown', keydown);
             }
           }
 
+          input.on('keydown', keydown);
           input.on('blur', blur);
-          input.on('keyup', keyup);
 
         });
 
@@ -84,7 +84,7 @@ module('assetListView', function (module) {
           input.hide();
           if (data.text() === '') {
             placeholder
-              .text('Click to add a ' + field.attr('data-field-name'))
+              .text('Click to add')
               .show();
           } else {
             model.data[field.attr('data-field-name')] = data.text();
@@ -105,7 +105,7 @@ module('assetListView', function (module) {
           input.hide();
           if (data.text() === '') {
             placeholder
-              .text('Click to add a ' + field.attr('data-field-name'))
+              .text('Click to add')
               .show();
           }
         });

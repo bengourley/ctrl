@@ -14,12 +14,17 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
     .addJs('js/notifier.js')
     .addJs('js/app.js');
 
+  function assetAccess(action) {
+    return serviceLocator.adminAccessControl
+      .requiredAccess('Asset', action, '/admin/login');
+  }
+
   /*
    * Admin routes
    */
   app.get(
     '/admin/asset',
-    serviceLocator.adminAccessControl.requiredAccess('Asset', 'read'),
+    assetAccess('read'),
     compact.js(['global'], ['admin-common'], ['admin-asset']),
     function (req, res) {
       viewRender(req, res, 'assetAdmin', {
@@ -36,7 +41,7 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
    */
   app.get(
     '/admin/asset/api/list',
-    serviceLocator.adminAccessControl.requiredAccess('Asset', 'read'),
+    assetAccess('read'),
     function (req, res) {
       serviceLocator.assetModel.list(function (err, results) {
         if (!err) {
@@ -50,7 +55,7 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
 
   app.post(
     '/admin/asset/api/new',
-    serviceLocator.adminAccessControl.requiredAccess('Asset', 'create'),
+    assetAccess('create'),
     serviceLocator.uploadDelegate.middleware,
     function (req, res) {
 
@@ -67,7 +72,7 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
           response.push(result);
           countdown--;
           if (countdown === 0) {
-            res.end(JSON.stringify(response))
+            res.end(JSON.stringify(response));
           }
         });
 

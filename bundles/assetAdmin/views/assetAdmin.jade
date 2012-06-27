@@ -31,10 +31,13 @@ prepend script
         img(src='http://dummyimage.com/100x100')
       .asset-item-details
         .editable(data-field-name='title')
+          span.label Title
           span.data <%= title %>
         .editable(data-field-name='description')
+          span.label Description
           span.data <%= description %>
-        .editable(data-field-name='tag')
+        .editable(data-field-name='tags')
+          span.label Tags
           span.data <%= tags %>
       .asset-item-meta
         span Filename: <%= basename %>

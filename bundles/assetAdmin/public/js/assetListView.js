@@ -50,6 +50,7 @@ module('assetListView', function (module) {
 
         field.on('edit', function () {
           data.hide();
+          input.val(data.text());
           input.show();
           input.focus();
           placeholder.hide();

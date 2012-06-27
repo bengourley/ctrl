@@ -91,7 +91,12 @@ function createModel(properties, serviceLocator) {
           cb(null, results.toArray());
         }
       });
+    },
+
+    read: function (id, cb) {
+      crudDelegate.read(id, cb);
     }
+
   };
 
 }

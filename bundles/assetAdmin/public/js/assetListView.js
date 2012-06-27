@@ -9,7 +9,12 @@ module('assetListView', function (module) {
 
     function renderAsset(model) {
 
-      var asset = $(_.template(assetItemTemplate, model.data));
+      var asset = $(
+        _.template(
+          assetItemTemplate,
+          _.extend({ preview: model.preview }, model.data)
+        )
+      );
 
       asset.find('button.delete').on('click', function (e) {
 
@@ -101,12 +106,14 @@ module('assetListView', function (module) {
         });
 
         field.on('cancel', function () {
-          data.show();
           input.hide();
           if (data.text() === '') {
             placeholder
               .text('Click to add')
               .show();
+            data.hide();
+          } else {
+            data.show();
           }
         });
 
@@ -140,7 +147,7 @@ module('assetListView', function (module) {
     };
 
     assets.add = function (a) {
-      el.prepend(renderAsset(assetItemModel(a)));
+      el.append(renderAsset(assetItemModel(a)));
     };
 
     return assets;

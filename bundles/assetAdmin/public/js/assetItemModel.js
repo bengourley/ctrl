@@ -3,8 +3,13 @@ module('assetItemModel', function (module) {
   function assetItemModel(data) {
 
     var model = {
-      data: data
+      data: data,
+      preview: 'http://dummyimage.com/100'
     };
+
+    if ((/^image\//).test(data.type)) {
+      model.preview = '/asset/' + data._id;
+    }
 
     model.del = function (success, error) {
       $.ajax({

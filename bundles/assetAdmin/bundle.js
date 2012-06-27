@@ -9,8 +9,6 @@ module.exports = {
   }],
   initialize: [
     function(serviceLocator, done) {
-      // The resource you need access of see the admin bundles
-      serviceLocator.adminAccessControlList.addResource('Asset');
       done();
     },
     function(serviceLocator, done) {

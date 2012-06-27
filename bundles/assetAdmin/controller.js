@@ -12,7 +12,7 @@ function createRoutes(app, properties, serviceLocator, viewPath) {
     .addJs('js/assetListView.js')
     .addJs('js/assetItemModel.js')
     .addJs('js/notifier.js')
-    .addJs('js/app.js');
+    .addJs('js/assetManager.js');
 
   function assetAccess(action) {
     return serviceLocator.adminAccessControl

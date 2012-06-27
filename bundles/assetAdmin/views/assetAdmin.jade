@@ -28,7 +28,7 @@ prepend script
   script(type='text/template', id='asset-list-item-template')
     .panel-asset-item
       .asset-item-thumbnail
-        img(src='http://dummyimage.com/100x100')
+        img(src!='<%= preview %>')
       .asset-item-details
         .editable(data-field-name='title')
           span.label Title
